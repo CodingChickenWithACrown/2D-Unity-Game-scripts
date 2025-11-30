@@ -8,20 +8,37 @@ public class ScoreManager : MonoBehaviour
 
     public static ScoreManager instance;
     public TextMeshProUGUI text;
-    int score;
+    private int score;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
-        }    
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-   public void changeScore(int coinValue)
+    void Start()
+    {
+        score = 0;
+        UpdateScoreText();
+    }
+
+    public void changeScore(int coinValue)
     {
         score += coinValue;
-        text.text = "Score: " + score.ToString();
+        UpdateScoreText();
+    }
+
+    private void UpdateScoreText()
+    {
+        if (text != null)
+        {
+            text.text = "Score: " + score.ToString();
+        }
     }
 }
