@@ -8,10 +8,13 @@ public class EagleDeath : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.CompareTag("Player"))
         {
-            animator.SetTrigger("Dies");
-            Destroy(gameObject,1);
+            if (animator != null)
+            {
+                animator.SetTrigger("Dies");
+            }
+            Destroy(gameObject, 1f);
         }
     }
 }
