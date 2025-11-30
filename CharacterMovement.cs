@@ -12,10 +12,11 @@ public class CharacterMovement : MonoBehaviour
     private float moveHorizontal;
     private float moveVertical;
     public Animator animator;
-    bool lookingRight = true;
+    private bool lookingRight = true;
     public int maxHealth = 100;
     public int currentHealth;
     public HealthBar healthBar;
+    public LayerMask groundLayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +34,11 @@ public class CharacterMovement : MonoBehaviour
     {
         moveHorizontal = Input.GetAxisRaw("Horizontal");
         moveVertical = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     void FixedUpdate()
