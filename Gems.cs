@@ -8,10 +8,13 @@ public class Gems : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.CompareTag("Player"))
         {
+            if (ScoreManager.instance != null)
+            {
+                ScoreManager.instance.changeScore(coinValue);
+            }
             Destroy(gameObject);
-            ScoreManager.instance.changeScore(coinValue);
         }
     }
 }
