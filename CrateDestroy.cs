@@ -8,7 +8,7 @@ public class CrateDestroy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Spike"))
         {
-            Destroy(collision.gameObject);
+            Destroy(gameObject);
         }
     }
 }
