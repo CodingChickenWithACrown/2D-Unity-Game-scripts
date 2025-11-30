@@ -21,10 +21,9 @@ public class AIPatrol : MonoBehaviour
     public Animator animator;
     
     [SerializeField]
-    Transform player;
+    private Transform player;
     [SerializeField]
-    float agroRange;
-    [SerializeField]
+    private float agroRange;
 
     // Start is called before the first frame update
     void Start()
@@ -39,21 +38,21 @@ public class AIPatrol : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (player == null)
+            return;
+
         float distToPlayer = Vector2.Distance(transform.position, player.position);
 
         if (distToPlayer > agroRange)
         {
-            animator.SetBool("Attack", false);
+            if (animator != null)
+                animator.SetBool("Attack", false);
             Patrol();
         }
-
-        else if(distToPlayer < agroRange)
+        else if (distToPlayer <= agroRange)
         {
-            //if(transform.position.x < player.position.x)
-            //{
-            //    Flip();
-            //}
-            animator.SetBool("Attack", true);
+            if (animator != null)
+                animator.SetBool("Attack", true);
             ChasePlayer();
         }
     }
@@ -85,10 +84,16 @@ public class AIPatrol : MonoBehaviour
 
     private void ChasePlayer()
     {
+        if (player == null)
+            return;
 
-        rb.velocity = new Vector2(0f, 0f);
-        rb.velocity = new Vector2(walkSpeed * 1.5f * Time.fixedDeltaTime, rb.velocity.y);
+        float direction = Mathf.Sign(player.position.x - transform.position.x);
+        rb.velocity = new Vector2(direction * Mathf.Abs(walkSpeed) * 1.5f * Time.fixedDeltaTime, rb.velocity.y);
 
+        if ((direction > 0 && walkSpeed < 0) || (direction < 0 && walkSpeed > 0))
+        {
+            Flip();
+        }
     }
 
 }
